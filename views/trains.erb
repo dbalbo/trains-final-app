@@ -14,9 +14,16 @@
 
       <p>Add a train route to the database</p>
 
-      <form action='/trains' method='post'>
-        <label for='name'>Train route name:</label>
-        <input id='name' name='name' type='text'>
 
-        <button type='submit'>Add Train</button>
+        <form class="form-inline" action='/trains' method='post'>
+          <label for='name'></label>
+          <input id='name' name='name' class="form-control" type='text'>
+
+        <button type='submit' class="btn btn-primary">Add Train</button>
       </form>
+
+
+      <div class ="container">
+        <a href="/">Return Home</a><br>
+        <a href="/cities">View All Cities</a>
+      </div>

@@ -40,7 +40,6 @@ attr_reader(:name, :id)
         DB.exec("INSERT INTO cities_trains (train_id, city_id) VALUES (#{self.id()}, #{city_id});")
       end
     end
-
     define_method(:cities) do
       train_cities =[]
       results = DB.exec("SELECT city_id FROM cities_trains WHERE train_id = #{self.id()};")
@@ -52,7 +51,6 @@ attr_reader(:name, :id)
       end
       train_cities
     end
-
     define_method(:delete) do
       DB.exec("DELETE FROM cities_trains WHERE train_id = #{self.id()};")
       DB.exec("DELETE FROM trains WHERE id = #{self.id()};")

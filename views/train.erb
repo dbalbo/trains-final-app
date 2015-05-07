@@ -3,7 +3,7 @@
 <h3>Select all Cites serviced by this Train Route:</h3>
 
 <% if @cities.any?() %>
- <form action="/t_update/<%= @train.id %>" method="post">
+ <form action="/trains/<%= @train.id %>" method="post">
    <input type="hidden" name="_method" value="patch">
    <% @cities.each() do |city| %>
      <div class="checkbox">
@@ -17,7 +17,7 @@
  </form>
 <% end %>
 
-<form action="/t_update/<%= @train.id() %>" method="post">
+<form action="/trains/<%= @train.id() %>" method="post">
   <input name="_method" type="hidden" value="delete">
 
   <button type="submit">Delete Train</button>
@@ -38,4 +38,8 @@
  <p>There are no cities yet!</p>
 <% end %>
 
-<a href="/">Return to Main Page</a>
+<div class ="container">
+  <a href="/">Return Home</a><br>
+  <a href="/trains">View All Train Schedules</a><br>
+  <a href="/cities">View All Cities</a>
+</div>

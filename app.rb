@@ -1,12 +1,11 @@
 require('sinatra')
 require('sinatra/reloader')
 also_reload('lib/**/*.rb')
-#require('spec_helper')
 require('./lib/train')
 require('./lib/city')
 require('pg')
 
-DB = PG.connect({:dbname => "train_schedule_test"})
+DB = PG.connect({:dbname => "train_schedule"})
 
 get("/") do
   erb(:index)
@@ -50,48 +49,36 @@ post("/cities") do
   erb(:cities)
 end
 
-patch("/t_update/:id") do
+patch("/trains/:id") do
   train_id = params.fetch("id").to_i()
   @train = Train.find(train_id)
-  city_ids = params.fetch("city_ids")
+  city_ids = params.fetch("city_ids", [])
   @train.update({:city_ids => city_ids})
   @cities = City.all()
   erb(:train)
 end
 
-patch("/c_update/:id") do
+patch("/cities/:id") do
   city_id = params.fetch("id").to_i()
   @city = City.find(city_id)
-  train_ids = params.fetch("train_ids")
+  train_ids = params.fetch("train_ids", [])
   @city.update({:train_ids => train_ids})
   @trains = Train.all()
   erb(:city)
 end
 
-delete("c_update/:id") do
+delete("/cities/:id") do
+  @train = Train.all()
   @city = City.find(params.fetch("id").to_i())
   @city.delete()
   @cities = City.all()
-  erb(:city)
+  erb(:index)
 end
 
-delete("t_update/:id") do
+delete("/trains/:id") do
+  @city = City.all()
   @train = Train.find(params.fetch("id").to_i())
   @train.delete()
   @trains = Train.all()
-  erb(:train)
+  erb(:index)
 end
-
-
-
-
-
-
-# get("/trains/new") do
-#   erb(:trains_form)
-# end
-
-
-# get("/cities/new") do
-#   erb(:cities_form)
-# end

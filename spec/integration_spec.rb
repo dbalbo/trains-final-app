@@ -20,3 +20,15 @@ set(:show_exception, false)
 #     expect(page).to have_content('Red Line')
 #   end
 # end
+
+
+describe("#delete") do
+    it("lets you delete a list from the database") do
+      city = City.new({:name => "Portland", :id => nil})
+      city.save()
+      city2 = City.new({:name => "Seattle", :id => nil})
+      city2.save()
+      city.delete()
+      expect(City.all()).to(eq([city2]))
+    end
+  end
