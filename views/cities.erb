@@ -1,0 +1,13 @@
+<h3> Here are all the cities in the system</h3>
+ <% if @cities.any?() %>
+   <p>cities</p>
+     <ul>
+       <% @cities.each do |city| %>
+         <li><a href="/cities/<%= city.id() %>"><%= city.name() %></a></li>
+
+       <% end %>
+      </ul>
+
+      <% else %>
+      <p>There are no cities added yet.</p>
+      <% end %>

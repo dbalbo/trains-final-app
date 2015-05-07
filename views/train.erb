@@ -1,0 +1,13 @@
+<h3> Here is the information about <%= @train.name() %></h3>
+
+
+  <p>Update a train route to the database</p>
+
+   <form action='/t_update/.id/<%= @train.id() %>' method='post'>
+      <input type='hidden' name='_method' value='patch'>
+
+     <label for='name'>Train route name:</label>
+     <input id='name' name='name' type='text'>
+
+     <button type='submit'>Update Train</button>
+   </form>

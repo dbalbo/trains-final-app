@@ -1,0 +1,47 @@
+<h3> Here is the information about <%= @city.name() %></h3>
+
+
+  <p>Update a city to the database</p>
+
+   <form action='/c_update/:id/<%= @city.id() %>' method='post'>
+      <input type='hidden' name='_method' value='patch'>
+
+     <label for='name'>City name:</label>
+     <input id='name' name='name' type='text'>
+
+     <button type='submit'>Update City</button>
+   </form>
+
+
+   <h3>Select all Cites serviced by this route:</h3>
+
+   <% if @cities.any?() %>
+     <form action="/trains/<%= @train.id %>" method="post">
+       <input type="hidden" name="_method" value="patch">
+
+       <% @cities.each() do |city| %>
+         <div class="checkbox">
+           <label>
+             <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
+           </label>
+         </div>
+       <% end %>
+
+       <button type="submit">Add Cities</button>
+     </form>
+   <% end %>
+
+
+   <% if @city.trains().any?() %>
+
+     <h3>Here are all the routes that service this City:</h3>
+
+     <ul>
+       <% @city.trains().each() do |train| %>
+         <li><%= train.name() %></li>
+       <% end %>
+     </ul>
+   <% else %>
+     <p>There are no trains to this city yet! <a href="/trains">Add trains here</a></p>
+   <% end %>
+   <a href="/">Return to Main Page</a>
