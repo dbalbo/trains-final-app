@@ -11,3 +11,12 @@
       <% else %>
       <p>There are no train routes yet.</p>
       <% end %>
+
+      <p>Add a train route to the database</p>
+
+      <form action='/trains' method='post'>
+        <label for='name'>Train route name:</label>
+        <input id='name' name='name' type='text'>
+
+        <button type='submit'>Add Train</button>
+      </form>

@@ -1,47 +1,40 @@
-<h3> Here is the information about <%= @city.name() %></h3>
+<h1><%= @city.name() %></h1>
+
+  <h3>Select all trains that service this city:</h3>
+
+  <% if @trains.any?() %>
+    <form action="/c_update/<%= @city.id %>" method="post">
+      <input type="hidden" name="_method" value="patch">
+      <% @trains.each() do |train| %>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="train_ids[]" value="<%= train.id() %>"><%= train.name() %>
+          </label>
+        </div>
+      <% end %>
+
+      <button type="submit">Update Trains</button>
+    </form>
+  <% end %>
+
+  <form action="/c_update/<%= @city.id() %>" method="post">
+    <input name="_method" type="hidden" value="delete">
+
+    <button type="submit">Delete City</button>
+  </form>
 
 
-  <p>Update a city to the database</p>
+  <% if @city.trains().any?() %>
 
-   <form action='/c_update/:id/<%= @city.id() %>' method='post'>
-      <input type='hidden' name='_method' value='patch'>
+    <h3>Here are all the Train route that service this city:</h3>
 
-     <label for='name'>City name:</label>
-     <input id='name' name='name' type='text'>
+    <ul>
+      <% @city.trains().each() do |train| %>
+        <li><%= train.name() %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are no trains yet!</p>
+  <% end %>
 
-     <button type='submit'>Update City</button>
-   </form>
-
-
-   <h3>Select all Cites serviced by this route:</h3>
-
-   <% if @cities.any?() %>
-     <form action="/trains/<%= @train.id %>" method="post">
-       <input type="hidden" name="_method" value="patch">
-
-       <% @cities.each() do |city| %>
-         <div class="checkbox">
-           <label>
-             <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
-           </label>
-         </div>
-       <% end %>
-
-       <button type="submit">Add Cities</button>
-     </form>
-   <% end %>
-
-
-   <% if @city.trains().any?() %>
-
-     <h3>Here are all the routes that service this City:</h3>
-
-     <ul>
-       <% @city.trains().each() do |train| %>
-         <li><%= train.name() %></li>
-       <% end %>
-     </ul>
-   <% else %>
-     <p>There are no trains to this city yet! <a href="/trains">Add trains here</a></p>
-   <% end %>
-   <a href="/">Return to Main Page</a>
+  <a href="/">Return to Main Page</a>

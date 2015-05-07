@@ -1,13 +1,41 @@
-<h3> Here is the information about <%= @train.name() %></h3>
+<h1><%= @train.name() %></h1>
+
+<h3>Select all Cites serviced by this Train Route:</h3>
+
+<% if @cities.any?() %>
+ <form action="/t_update/<%= @train.id %>" method="post">
+   <input type="hidden" name="_method" value="patch">
+   <% @cities.each() do |city| %>
+     <div class="checkbox">
+       <label>
+         <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
+       </label>
+     </div>
+   <% end %>
+
+   <button type="submit">Update Cities</button>
+ </form>
+<% end %>
+
+<form action="/t_update/<%= @train.id() %>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete Train</button>
+</form>
 
 
-  <p>Update a train route to the database</p>
 
-   <form action='/t_update/.id/<%= @train.id() %>' method='post'>
-      <input type='hidden' name='_method' value='patch'>
+<% if @train.cities().any?() %>
 
-     <label for='name'>Train route name:</label>
-     <input id='name' name='name' type='text'>
+ <h3>Here are all the Cities serviced by this Train route:</h3>
 
-     <button type='submit'>Update Train</button>
-   </form>
+ <ul>
+   <% @train.cities().each() do |city| %>
+     <li><%= city.name() %></li>
+   <% end %>
+ </ul>
+<% else %>
+ <p>There are no cities yet!</p>
+<% end %>
+
+<a href="/">Return to Main Page</a>
